@@ -73,7 +73,7 @@ class MultiAgentEnv(gym.Env):
             self.viewers = [None]
         else:
             self.viewers = [None] * self.n
-        self._reset_render()
+        self.reset_render()
 
     def _seed(self, seed=None):
         if seed is None:
@@ -81,7 +81,7 @@ class MultiAgentEnv(gym.Env):
         else:
             np.random.seed(seed)
 
-    def _step(self, action_n):
+    def step(self, action_n):
         obs_n = []
         reward_n = []
         done_n = []
@@ -108,11 +108,11 @@ class MultiAgentEnv(gym.Env):
             self.post_step_callback(self.world)
         return obs_n, reward_n, done_n, info_n
 
-    def _reset(self):
+    def reset(self):
         # reset world
         self.reset_callback(self.world)
         # reset renderer
-        self._reset_render()
+        self.reset_render()
         # record observations for each agent
         obs_n = []
         self.agents = self.world.policy_agents
@@ -359,7 +359,7 @@ class BatchMultiAgentEnv(gym.Env):
     def observation_space(self):
         return self.env_batch[0].observation_space
 
-    def _step(self, action_n, time):
+    def step(self, action_n, time):
         obs_n = []
         reward_n = []
         done_n = []
@@ -374,7 +374,7 @@ class BatchMultiAgentEnv(gym.Env):
             done_n += done
         return obs_n, reward_n, done_n, info_n
 
-    def _reset(self):
+    def reset(self):
         obs_n = []
         for env in self.env_batch:
             obs_n += env.reset()
