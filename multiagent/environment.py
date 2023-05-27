@@ -197,12 +197,12 @@ class MultiAgentEnv(gym.Env):
         assert len(action) == 0
 
     # reset rendering assets
-    def _reset_render(self):
+    def reset_render(self):
         self.render_geoms = None
         self.render_geoms_xform = None
 
     # render environment
-    def _render(self, mode='human', close=True):
+    def render(self, mode='human', close=True):
         if close:
             # close any existic renderers
             for i,viewer in enumerate(self.viewers):
@@ -381,7 +381,7 @@ class BatchMultiAgentEnv(gym.Env):
         return obs_n
 
     # render environment
-    def _render(self, mode='human', close=True):
+    def render(self, mode='human', close=True):
         results_n = []
         for env in self.env_batch:
             results_n += env.render(mode, close)
